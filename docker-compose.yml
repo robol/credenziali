@@ -1,0 +1,17 @@
+version: '2.3'
+
+services:
+  credenziali-web:
+    build: docker-image
+    container_name: credenziali
+    networks:
+      - backend
+    volumes:
+      - ./credenziali:/var/www/html
+      - ./credenziali-pdf:/credenziali
+    ports:
+      - 127.0.0.1:10004:80
+    
+networks:
+  backend: 
+    
