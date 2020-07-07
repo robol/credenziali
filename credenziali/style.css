@@ -1,0 +1,33 @@
+#main-container {
+  width: 100%;
+  max-width: 900px;
+  padding: 5px;
+  margin: auto;
+}
+
+.warning {
+  background-color: #e8e26f;
+  text-align: center;
+  display: block;
+}
+
+.login-details {
+  width: 100%;
+  text-align: right;
+  
+}
+
+.login-form {
+  width: 100%;
+  text-align: center;
+}
+
+.form-block {
+  margin: 5px;
+}
+
+.form-block > label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+}
