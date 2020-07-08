@@ -17,26 +17,29 @@
 <html>
 <head>
   <title>Download credenziali</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
-  <div id="main-container">
-    <h1>Credenziali laboratorio di Comunicazione mediante calcolatore</h1>
+  <div id="main-container" class="container">
+    <h1 class="h3 mb-3">Laboratorio di Comunicazione mediante Calcolatore</h1>
     
     <div class="login-details">
       <?php if ($user == null): ?>
         &nbsp;
       <?php else: ?>
-        Sei loggato come <?php echo $name; ?> (<strong><?php echo $user; ?></strong>). 
-        <a href="./?action=logout"><button>Logout</button></a>
+        Sei loggato come <?php echo $name; ?> (<strong><?php echo $user; ?></strong>). &nbsp; 
+        <a href="./?action=logout"><button class="btn-primary btn btn-sm">Logout</button></a>
       <?php endif; ?>
     </div>
     
+    <div class="content">
+    
     <?php if ($user == null): ?>
       <p>È necessario effettuare il login (con le credenziali di Ateneo) per
-      ottenere le credenziali del laboratorio. </p>
+      ottenere le credenziali del laboratorio.</p>
       
       <?php if ($login_failed): ?>
         <p class="warning">Le credenziali inserite non sono corrette.</p>
@@ -46,8 +49,7 @@
     <?php else: ?>
       <?php if (file_exists($path_credenziali)): ?>
         <p>
-          Sono disponibili le credenziali per il download; procedere cliccando
-          sul link qui sotto: 
+          Le credenziali sono disponibili per il download. 
           <ul>
             <li><a href="./?action=download">Download credenziali</a></li>
           </ul>
@@ -56,6 +58,8 @@
         <p>Non è disponibile alcun file per il download.</p>
       <?php endif; ?>
     <?php endif; ?>
+    
+    </div>
 
 </div>
 </body>

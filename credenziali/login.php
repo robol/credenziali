@@ -9,6 +9,8 @@
    * La funzione login_form() stampa la form per effettuare il login. 
    */
    
+  include_once("ldap-login.php");
+   
   $user = null;
   $login_failed = false;
    
@@ -28,39 +30,17 @@
         $user = $_POST['username'];
         $pass = $_POST['password'];
         
-        putenv("LDAPTLS_REQCERT=never");
-        
-        $ds = ldap_connect("ldap://idmauth.unipi.it");
-        
-        if (! $ds) {
-          $err = "Impossibile contattare il server LDAP";
-          echo $err;
-          $user = null;
-        }
-        else {
-            ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);  
-            if (ldap_start_tls($ds)) {
-                $r = ldap_bind($ds, "uid=" . $user . ",dc=studenti,ou=people,dc=unipi,dc=it", $pass);
-                
-                if ($r) {
-                   $results = ldap_search($ds, "dc=unipi,dc=it", "uid=" . $user);
-                   $matches = ldap_get_entries($ds, $results);
-                   $name = $matches[0]['cn'][0];
-                }
-            }
-            else {
-                $r = false;
-            }
+        $data = ldap_login($user, $pass);
 
-            if ($r) {
+        if ($data != null) {
               /* Login ok */
               $_SESSION['user'] = $user;
-              $_SESSION['name'] = $name;
-            }
-            else {
+              $_SESSION['name'] = $data['name'];
+              $name = $data['name'];
+        }
+        else {
               $user = null;
               $login_failed = true;
-            }
         }
       }
   }
@@ -69,15 +49,15 @@ function login_form() {
   ?>
       <form action="./" method="POST">
       <div class="form-block">
-          <label>Utente: </label>
-          <input type="text" name="username"></input>
+          <label for="username" class="sr-only">Utente: </label>
+          <input type="text" name="username" class="form-control" placeholder="Utente"></input>
       </div>
       <div class="form-block">
-          <label>Password: </label>
-          <input type="password" name="password"></input>
+          <label for="password" class="sr-only">Password: </label>
+          <input type="password" name="password" class="form-control" placeholder="Password"></input>
       </div>
       <div class="form-block">
-          <input type="submit" value="Login">      
+          <input  class="btn btn-lg btn-primary btn-block" type="submit" value="Login">      
       </div>
     </form>
   <?php
