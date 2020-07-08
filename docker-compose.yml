@@ -4,6 +4,8 @@ services:
   credenziali-web:
     build: docker-image
     container_name: credenziali
+    env_file: 
+      - .env
     networks:
       - backend
     volumes:

@@ -11,8 +11,10 @@
  */
 function ldap_login($user, $pass) {
   putenv("LDAPTLS_REQCERT=never");
-
-  $ds = ldap_connect("ldap://idmauth.unipi.it");
+  
+  $ldap_uri = getenv("LDAP_SERVER");
+  
+  $ds = ldap_connect($ldap_uri);
 
   if (! $ds) {
     return null;
@@ -26,14 +28,20 @@ function ldap_login($user, $pass) {
       return null;
     }
 
-    $r = ldap_bind($ds, "uid=" . $user . ",dc=studenti,ou=people,dc=unipi,dc=it", $pass);
+    $r = @ldap_bind($ds, "uid=" . $user . ",dc=studenti,ou=people,dc=unipi,dc=it", $pass);
+    
+    if (! $r) {    
+      /* We try to bind with the professor role as a fallacback -- this is mainly
+       * for testing purposes. */
+      $r = @ldap_bind($ds, "uid=" . $user . ",dc=dm,ou=people,dc=unipi,dc=it", $pass);
+    }
 
     if ($r) {
       $results = ldap_search($ds, "dc=unipi,dc=it", "uid=" . $user);
       $matches = ldap_get_entries($ds, $results);
       $name = $matches[0]['cn'][0];
     }
-    else {
+    else {    
       return null;
     }
   }
