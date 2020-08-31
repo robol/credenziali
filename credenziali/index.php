@@ -5,6 +5,16 @@
   $path_credenziali = "/credenziali/$user.pdf";
   
   if ($user != null && $_GET['action'] == 'download') {
+    /* Logghiamo che l'utente ha scaricato il file */
+    $h = fopen('/credenziali/downloads.log', 'a');
+    if (! $h) {
+      echo "Errore nella creazioni del registro dei download.";
+      exit;
+    }
+    
+    fwrite($h, date(DATE_RFC2822) . " - Download di $user.pdf da parte dell'utente $user\n");
+    fclose($h);
+  
     /* Forniamo direttamente il file */
     header('Content-Description: File Transfer');
     header('Content-Type: application/pdf');
