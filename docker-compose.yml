@@ -13,6 +13,8 @@ services:
       - ./credenziali-pdf:/credenziali
     ports:
       - 127.0.0.1:10004:80
+    restart: unless-stopped
+    
     
 networks:
   backend: 
