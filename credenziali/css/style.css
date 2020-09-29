@@ -6,6 +6,10 @@ h1 {
   margin-top: 20px;
 }
 
+h4 {
+  font-size: 1.15em;
+}
+
 #main-container {
   width: 100%;
   max-width: 700px;

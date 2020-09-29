@@ -10,6 +10,7 @@
  * Otherwise, the function returns null. 
  */
 function ldap_login($user, $pass) {
+
   putenv("LDAPTLS_REQCERT=never");
   
   $ldap_uri = getenv("LDAP_SERVER");
