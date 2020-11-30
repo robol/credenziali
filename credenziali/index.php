@@ -48,7 +48,7 @@
 <head>
   <title>Download credenziali</title>
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="css/style.css?v=1" />
+  <link rel="stylesheet" type="text/css" href="css/style.css?v=2" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -78,21 +78,22 @@
       <div class="login-form"><?php login_form(); ?></div>
     <?php else: ?>
       <?php if (file_exists($path_credenziali_phc)): ?>
-        <p>
+        <div class="cred-block">
           Le credenziali per il <a href="https://poisson.phc.dm.unipi.it/">PHC</a> 
           sono disponibili per il download. Per maggiori
           informazioni contattare i <a href="mailto:macchinisti@poisson.phc.dm.unipi.it">Macchinisti</a>.
           <ul>
-            <li><a href="./?action=download-phc">Download credenziali</a></li>
+            <li><a href="./?action=download-phc">Download credenziali PHC</a></li>
           </ul>
-        </p>
+        </div>
       <?php endif; ?>
     
       <?php if (file_exists($path_credenziali)): ?>
-        <p>
-          Le credenziali sono disponibili per il download. </p>
+        <div class="cred-block">
+          Le credenziali per l'account in Dipartimento (Aula 3, Aula 4, ecc.) 
+          sono disponibili per il download.
           <ul>
-            <li><a href="./?action=download">Download credenziali</a></li>
+            <li><a href="./?action=download">Download credenziali Dipartimento</a></li>
           </ul>
           
           <p>Nello scaricare il file
@@ -135,7 +136,7 @@
 		al sistema. Il Titolare del Trattamento di tali dati a norma dell'art. 41f del D.Lgs. 196/2003 è il
 		Dipartimento di Matematica dell'Università di Pisa.</p>
           </div>
-        </p>
+        </div>
       <?php else: ?>
         <p>Non è disponibile alcun file per il download.</p>
       <?php endif; ?>

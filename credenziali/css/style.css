@@ -51,3 +51,14 @@ h4 {
     width: 150px;
     text-align: right;
 }
+
+.cred-block {
+    border-left: 3px solid #34906f;
+    padding-left: 10px;
+    margin-top: 30px;
+}
+
+.cred-block > ul {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
