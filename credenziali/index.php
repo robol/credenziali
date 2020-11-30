@@ -3,6 +3,7 @@
   
   /* Determinazione del path delle credenziali, nel caso il login sia valido */
   $path_credenziali = "/credenziali/$user.pdf";
+  $path_credenziali_phc = "/credenziali/$user-phc.pdf";
   
   if ($user != null && $_GET['action'] == 'download') {
     /* Logghiamo che l'utente ha scaricato il file */
@@ -20,6 +21,25 @@
     header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename="'. $user .'.pdf"');
     readfile($path_credenziali);
+    exit;
+  }
+  
+  if ($user != null && $_GET['action'] == 'download-phc') {
+    /* Logghiamo che l'utente ha scaricato il file */
+    $h = fopen('/credenziali/downloads.log', 'a');
+    if (! $h) {
+      echo "Errore nella creazioni del registro dei download.";
+      exit;
+    }
+    
+    fwrite($h, date(DATE_RFC2822) . " - Download di $user-phc.pdf da parte dell'utente $user\n");
+    fclose($h);
+  
+    /* Forniamo direttamente il file */
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/pdf');
+    header('Content-Disposition: attachment; filename="'. $user .'-phc.pdf"');
+    readfile($path_credenziali_phc);
     exit;
   }
 ?>
@@ -57,6 +77,17 @@
       
       <div class="login-form"><?php login_form(); ?></div>
     <?php else: ?>
+      <?php if (file_exists($path_credenziali_phc)): ?>
+        <p>
+          Le credenziali per il <a href="https://poisson.phc.dm.unipi.it/">PHC</a> 
+          sono disponibili per il download. Per maggiori
+          informazioni contattare i <a href="mailto:macchinisti@poisson.phc.dm.unipi.it">Macchinisti</a>.
+          <ul>
+            <li><a href="./?action=download-phc">Download credenziali</a></li>
+          </ul>
+        </p>
+      <?php endif; ?>
+    
       <?php if (file_exists($path_credenziali)): ?>
         <p>
           Le credenziali sono disponibili per il download. </p>
